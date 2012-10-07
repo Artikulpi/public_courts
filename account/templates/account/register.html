@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <h2>Register</h2>
+    <p></p>
+    <div class="row">
+        <div class="span8">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p></p>
+                <button type="submit" class="btn btn-info">
+                    <i class="icon-ok icon-white"></i>
+                    Submit
+                </button>
+            </form>
+        </div>
+        <div class="span2">
+            <h2>Login</h2>
+            <a href="../login/" class="btn btn-large btn-primary">
+                <i class="icon-lock icon-white"></i>
+                <b>Login</b>
+            </a>
+        </div>
+    </row>
+    
+{% endblock %}
+
+{% block sitescripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $('.helptext').attr('class', 'alert alert-info');
+        });
+    </script>
+{% endblock %}

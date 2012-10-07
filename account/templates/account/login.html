@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Masuk{% endblock %}
+{% block content %}
+
+    {% if not user.is_authenticated %}
+        <div class="row">
+            <div class="span4">
+                {% if form.errors %}
+                <div class="alert alert-error">Your username and password didn't match. Please try again.</div>
+                {% endif %}
+                
+                <form method="post" action="{% url django.contrib.auth.views.login %}"
+                    class="login-form">
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="id_username">
+                                User name
+                            </label>
+                            <div class="controls">{{ form.username }}</div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="id_password">
+                                Password
+                            </label>
+                            <div class="controls">{{ form.password }}</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="icon-lock icon-white"></i>
+                            Log in
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+            
+            <div class="span6">
+                <h3>Sign Up</h3>
+                <p></p>
+                <a class="btn btn-large btn-primary" href="/account/register/">
+                    <b>Register Now! >></b>
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <script type="text/javascript">
+            window.location.replace("/");
+        </script>
+    {% endif %}
+
+{% endblock %}
+
+{% block sitescripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#id_username').attr('placeholder', 'Nama pengguna');
+            $('#id_password').attr('placeholder', 'Kata sandi');
+        })
+    </script>
+{% endblock %}

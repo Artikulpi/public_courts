@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Profile {{ user.first_name }}{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="span5">
+            <h2>Profile {{ user.username }}</h2>
+        </div>
+        
+        <div class="span5">
+            <div class="btn-group pull-right">
+                <a href="#" class="btn active">Profile</a>
+                <a href="./profile/edit/" class="btn">Edit</a>
+            </div>
+        </div>
+    </div>
+    
+    <p></p>
+    
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if user %}
+                <tr>
+                    <td>Username</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+
+                <tr>
+                    <td>First Name</td>
+                    <td>{{ user.first_name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Last Name</td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                {% if profile %}
+                    <tr>
+                        <td>Address</td>
+                        <td>{{ profile.address }}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>{{ profile.phone }}</td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+        </tbody>
+    </table>
+    
+{% endblock %}
+

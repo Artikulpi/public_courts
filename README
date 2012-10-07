@@ -1,0 +1,8 @@
+REQUIREMENT :
+
+* Django 1.4
+* django-simple-captcha
+
+TODO:
+* Slug at corruption view url
+* 

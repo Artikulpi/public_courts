@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Confirmation{% endblock %}
+{% block content %}
+    <h2>Email Confirmation</h2>
+    <p></p>
+    {% if confirm_error %}
+        <p class="alert alert-error">Confirmation fail!</p>
+        <p>Confirmation fail, maybe :</p>
+        <ol>
+            <li>Not yet <a href="/account/register/">Register</a></li>
+            <li>Token expired</li>
+            <li>Broken link</li>
+        </ol>
+        
+        <p>Check your email confirmation, or register <a href="/account/register/">pendaftaran ulang</a> if confirmation is expired.</p>
+        
+    {% else %}
+        <p class="alert alert-success">
+            <b>Thanks!</b>, your confirmation is success, and account is already active.
+        </p>
+        
+        <p><b>Welcome {{ user_confirmed }}</b>, now you can <a href="/account/login/">login</a>.
+        
+    {% endif %}
+{% endblock %}

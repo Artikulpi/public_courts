@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ case.title }}{% endblock %}
+{% block content %}
+
+    {% if case %}
+        <h3>{{ case.title }}</h3>
+        <p>{{ case.date }}</p>
+        <p><img src="{{ MEDIA_URL }}{{ case.images }}"></p>
+        <p>{{ case.desc }}</p>
+        
+        <h3>Vote</h3>        
+        <h3>Article</h3>
+        <h3>Progress</h3>
+        <h3>Media</h3>
+    {% endif %}
+
+{% endblock %}

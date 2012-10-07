@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="span4">
+            <h4>Case Administration</h4>
+        </div>
+        <div class="span6">
+            <div class="btn-group pull-right">
+                <a href="#" class="btn active">Case</a>
+                <a href="./article/" class="btn">Article</a>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    
+    <div class="tab-content">
+        <div class="tab-pane {% if not form.errors %}active{% endif %}" id="view">
+            <a href="#add" data-toggle="tab" class="btn btn-primary">Add</a>
+            <p></p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cases %}
+                        {% for case in cases %}
+                            <tr>
+                                <td>{{ case.date|date:"d F Y" }}</td>
+                                <td>{{ case.title }}</td>
+                                <td>
+                                    <a href="./{{ case.id }}">Action</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan=3>
+                            <p class="alert alert-info">
+                                Empty.
+                            </p>
+                        </td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="tab-pane {% if form.errors %}active{% endif %}" id="add">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <!-- Inline Formset -->
+                <h4>Imprisonment</h4>
+                {{ formset.management_form }}
+                {{ formset.non_form_errors.as_ul }}
+                <table>
+                {% for form in formset.forms %}
+                    {% if forloop.first %}
+                    <thead>
+                        <tr>
+                        {% for field in form.visible_fields %}
+                            <th>{{ field.label|capfirst }}</th>
+                        {% endfor %}
+                        </tr>
+                    </thead>
+                    {% endif %}
+                    
+                    <tbody>
+                        <tr class="formset">
+                            {% for field in form.visible_fields %}
+                                <td>
+                                    {# Include the hidden fields in the form #}
+                                    {% if forloop.first %}
+                                        {% for hidden in form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ field.errors.as_ul }}
+                                    {{ field }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+                </table>
+                <!-- a href="#" class="add-row">Add</a -->
+                <p></p>
+                
+                <!-- Inline Criminal Fines Formset -->
+                <h4>Criminal Fines</h4>
+                {{ cfformset.management_form }}
+                {{ cfformset.non_form_errors.as_ul }}
+                <table>
+                {% for form in cfformset.forms %}
+                    {% if forloop.first %}
+                    <thead>
+                        <tr>
+                        {% for field in form.visible_fields %}
+                            <th>{{ field.label|capfirst }}</th>
+                        {% endfor %}
+                        </tr>
+                    </thead>
+                    {% endif %}
+                    
+                    <tbody>
+                        <tr class="formset">
+                            {% for field in form.visible_fields %}
+                                <td>
+                                    {# Include the hidden fields in the form #}
+                                    {% if forloop.first %}
+                                        {% for hidden in form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ field.errors.as_ul }}
+                                    {{ field }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                {% endfor %}
+                </table>
+                <!-- a href="#" class="add-row">Add</a -->
+                <p></p>
+                
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="#view" class="btn btn-inverse" data-toggle="tab">
+                    Cancel</a>
+            </form>
+        </div>
+        
+    </div>
+    
+{% endblock %}

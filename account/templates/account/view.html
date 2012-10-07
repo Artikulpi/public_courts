@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}View User{% endblock %}
+{% block content %}
+    <h2>User Detail</h2>
+    
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#lihat" data-toggle="tab">View</a></li>
+            <li><a href="#ubah" data-toggle="tab">Edit</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="lihat">
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Atribut</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if view_user %}
+                            <tr>
+                                <td>Username</td>
+                                <td>{{ view_user.username }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>First Name</td>
+                                <td>{{ view_user.first_name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Last Name</td>
+                                <td>{{ view_user.last_name }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Email</td>
+                                <td>{{ view_user.email }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Staff</td>
+                                <td>{{ view_user.is_staff }}</td>
+                            </tr>
+                            <tr>
+                                <td>Active</td>
+                                <td>{{ view_user.is_active }}</td>
+                            </tr>
+                            <tr>
+                                <td>Admin</td>
+                                <td>{{ view_user.is_superuser }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last login</td>
+                                <td>{{ view_user.last_login }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date register</td>
+                                <td>{{ view_user.date_joined }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                <p>
+                    <form action="delete/" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user-id"
+                            value="{{ view_user.id }}">
+                        <button type="submit" class="btn btn-danger"
+                            onClick="return confirmDelete()">Delete</button>
+                        <a href="../" class="btn btn-info">Back</a>
+                    </form>
+                </p>
+            </div>
+
+            <div class="tab-pane" id="ubah">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-info">Save</button>
+                    <a href="../" class="btn btn-inverse">Cancel</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block sitescripts %}
+    <script type="text/javascript">
+        function confirmDelete() {
+            var agree=confirm("Are you sure?");
+            if(agree)
+                return true;
+            else
+                return false;
+        }
+    </script>
+{% endblock %}
+

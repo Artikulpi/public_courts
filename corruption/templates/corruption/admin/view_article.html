@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}View Article{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="span5">
+            <h4>{{ case }}</h4>
+        </div>
+        <div class="span5">
+            <a href="../" class="btn btn-inverse pull-right">
+                <i class="icon-circle-arrow-left icon-white"></i>
+                Back
+            </a>
+        </div>
+    </div>
+    <p></p>
+    <div class="tab-content">
+        <div class="tab-pane {% if not form.errors %}active{% endif %}" id="view">
+        
+            <table class="table table-bordered table-stripped">
+                {% if article %}
+                    <tr>
+                        <th>Article Number</th>
+                        <td>{{ article.article_no }}</td>
+                    </tr>
+                    <tr>
+                        <th>Subject</th>
+                        <td>{{ article.subject }}</td>
+                    </tr>
+                    <tr>
+                        <th>Imprisonment</th>
+                        <td>{{ article.imprisonment }}</td>
+                    </tr>
+                    <tr>
+                        <th>Criminal Fines</th>
+                        <td>{{ article.criminal_fines }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+            
+            <form method="post" action="delete/">
+                {% csrf_token %}
+                <input type="hidden" name="article-id" value="{{ article.id }}">
+                <a href="#new" class="btn btn-primary" data-toggle="tab">Edit</a>
+                <button type="submit" class="btn btn-danger"
+                onClick="return confirmDelete()">Delete</button>
+                <a href="../" class="btn btn-inverse">Back</a>
+            </form>
+            
+        </div>
+        <div class="tab-pane {% if form.errors %}active{% endif %}" id="new">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="#view" class="btn btn-inverse" data-toggle="tab">
+                    Cancel</a>
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}
+{% block sitescripts %}
+    <script type="text/javascript">
+        function confirmDelete() {
+            var agree=confirm("Are you sure?");
+            if(agree)
+                return true;
+            else
+                return false;
+        }
+    </script>
+{% endblock %}

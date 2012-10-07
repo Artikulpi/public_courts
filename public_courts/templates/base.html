@@ -1,0 +1,82 @@
+{% extends "base_root.html" %}
+{% block body %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse"
+                    data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="/">Public Courts</a>
+                <div class="nav-collapse collapse">
+                    <div class="pull-right">
+                        <ul class="nav">
+                            <li><a href="/">
+                                <i class="icon-home icon-white"></i>
+                                Home</a></li>
+                            <li><a href="#">
+                                <i class="icon-book icon-white"></i>
+                                About</a></li>
+                            <li><a href="#">
+                                <i class="icon-question-sign icon-white"></i>
+                                Contact</a></li>
+                            
+                            {% if user.is_authenticated %}
+                                <div class="btn-group pull-right">
+                                    <a class="btn dropdown-toggle"
+                                        data-toggle="dropdown" href="#">
+                                        <i class="icon-user"></i> {{ user.username }}
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/account/profile/">
+                                            Profile</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="/account/logout/">
+                                            Logout</a></li>
+                                    </ul>
+                                </div>
+                            {% else %}
+                            <li><a href="/account/login/">
+                                <i class="icon-question-sign icon-white"></i>
+                                Login</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="span2">
+                <ul class="nav nav-list well">
+                    <li class="nav-header">Layanan</li>
+                    <li><a href="/">
+                        <i class="icon-home"></i>
+                        Home</a></li>
+                    
+                    {% if user.is_superuser %}
+                        <li class="nav-header">Admin</li>
+                        <li><a href="/account/admin/">
+                            <i class="icon-user"></i>
+                            Users
+                        </a></li>
+                        <li><a href="/corruption/admin/">
+                            <i class="icon-cog"></i>
+                            Corruption
+                        </a></li>
+                    {% endif %}
+                      
+                </ul>
+            </div>
+            <div class="span10">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>    
+{% endblock %}
